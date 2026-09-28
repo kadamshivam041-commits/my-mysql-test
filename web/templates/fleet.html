@@ -89,7 +89,28 @@
             color: #9ca3af;
             font-size: 14px;
         }
+        .search-box {
+            margin-bottom: 20px;
+        }
 
+        .search-box input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #111827;
+            border: 1px solid #374151;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+        }
+
+        .search-box input::placeholder {
+            color: #6b7280;
+        }
         .card {
             background: #111827;
             border: 1px solid #1f2937;
@@ -175,7 +196,14 @@
             <h1>🚢 Fleet Management</h1>
             <p>Monitor vessels, specifications, capacity, registration details, and operational status.</p>
         </div>
-
+        <div class="search-box">
+            <input
+                type="text"
+                id="fleetSearch"
+                placeholder="🔎 Search ships by name, IMO, flag, type, or status..."
+                onkeyup="searchFleet()"
+            >
+        </div>
         <div class="card">
 
             <table>
@@ -223,6 +251,22 @@
     </main>
 
 </div>
+    <script>
+        function searchFleet() {
+            const input = document.getElementById("fleetSearch");
+            const filter = input.value.toLowerCase();
+            const rows = document.querySelectorAll("tbody tr");
 
+            rows.forEach(function(row) {
+                const text = row.textContent.toLowerCase();
+
+                if (text.includes(filter)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
 </body>
 </html>
