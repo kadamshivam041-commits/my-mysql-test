@@ -106,6 +106,31 @@
             font-weight: bold;
         }
 
+        .search-box {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #111827;
+            border: 1px solid #374151;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+        }
+
+        .search-box input::placeholder {
+            color: #6b7280;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -207,6 +232,10 @@
                 Monitor cargo types, quantities, destinations, and delivery status across voyages.
             </p>
 
+            <div class="search-box">
+                <input type="text" id="cargoSearch" placeholder="🔎 Search cargo by type, ship, destination, status, or ID..." onkeyup="searchCargo()">
+            </div>
+
             <div class="cargo-card">
 
                 <div class="table-header">
@@ -279,5 +308,22 @@
 
     </div>
 
+    <script>
+        function searchCargo() {
+            const input = document.getElementById("cargoSearch");
+            const filter = input.value.toLowerCase();
+            const rows = document.querySelectorAll("tbody tr");
+
+            rows.forEach(function(row) {
+                const text = row.textContent.toLowerCase();
+
+                if (text.includes(filter)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
 </body>
 </html>ls -l web/templates/cargo.html
