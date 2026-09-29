@@ -105,6 +105,30 @@
             font-size: 17px;
             font-weight: bold;
         }
+        .search-box {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #111827;
+            border: 1px solid #374151;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+        }
+
+        .search-box input::placeholder {
+            color: #6b7280;
+        }
 
         table {
             width: 100%;
@@ -208,7 +232,14 @@
                 <div class="table-header">
                     👨‍✈️ Registered Crew
                 </div>
-
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="crewSearch"
+                        placeholder="🔎 Search crew by name, rank, nationality, ship, or status..."
+                        onkeyup="searchCrew()"
+                    >
+                </div>
                 {% if crew %}
 
                 <table>
@@ -272,6 +303,22 @@
         </main>
 
     </div>
+    <script>
+        function searchCrew() {
+            const input = document.getElementById("crewSearch");
+            const filter = input.value.toLowerCase();
+            const rows = document.querySelectorAll("tbody tr");
 
+            rows.forEach(function(row) {
+                const text = row.textContent.toLowerCase();
+
+                if (text.includes(filter)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
 </body>
 </html>
