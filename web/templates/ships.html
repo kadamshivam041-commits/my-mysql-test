@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Crew | OCEAN COMMAND{% endblock %}
+{% block title %}Fleet | OCEAN COMMAND{% endblock %}
 
 {% block content %}
 
@@ -9,32 +9,33 @@
     <div class="page-heading">
 
         <div>
-            <p class="eyebrow">CREW OPERATIONS</p>
+            <p class="eyebrow">FLEET OPERATIONS</p>
 
-            <h2>Crew Command</h2>
+            <h2>Vessel Command</h2>
 
             <p class="page-subtitle">
-                Monitor crew members, ranks, assignments and operational status.
+                Monitor and manage registered vessels across the fleet.
             </p>
         </div>
 
         <div class="page-counter">
-            <span>REGISTERED CREW</span>
-            <strong>{{ crew|length }}</strong>
+            <span>REGISTERED VESSELS</span>
+            <strong>{{ ships|length }}</strong>
         </div>
 
     </div>
+
 <div class="fleet-overview">
 
     <div class="fleet-overview-card">
 
         <span class="fleet-overview-icon">
-            👨‍✈️
+            🚢
         </span>
 
         <div>
-            <small>TOTAL CREW</small>
-            <strong>{{ crew|length }}</strong>
+            <small>TOTAL FLEET</small>
+            <strong>{{ ships|length }}</strong>
         </div>
 
     </div>
@@ -47,8 +48,8 @@
         </span>
 
         <div>
-            <small>ON BOARD</small>
-            <strong>{{ on_board_crew }}</strong>
+            <small>ACTIVE</small>
+            <strong>{{ active_ships }}</strong>
         </div>
 
     </div>
@@ -61,8 +62,22 @@
         </span>
 
         <div>
-            <small>ON LEAVE</small>
-            <strong>{{ on_leave_crew }}</strong>
+            <small>AT PORT</small>
+            <strong>{{ at_port_ships }}</strong>
+        </div>
+
+    </div>
+
+
+    <div class="fleet-overview-card">
+
+        <span class="fleet-overview-icon maintenance">
+            🔧
+        </span>
+
+        <div>
+            <small>MAINTENANCE</small>
+            <strong>{{ maintenance_ships }}</strong>
         </div>
 
     </div>
@@ -73,8 +88,8 @@
         <div class="table-toolbar">
 
             <div>
-                <p class="eyebrow">CREW DATABASE</p>
-                <h3>Crew Registry</h3>
+                <p class="eyebrow">VESSEL DATABASE</p>
+                <h3>Fleet Registry</h3>
             </div>
 
             <div class="search-box">
@@ -83,8 +98,8 @@
 
                 <input
                     type="text"
-                    id="crewSearch"
-                    placeholder="Search crew..."
+                    id="fleetSearch"
+                    placeholder="Search vessels..."
                     autocomplete="off"
                 >
 
@@ -92,92 +107,108 @@
 
         </div>
 
+
         <div class="table-wrapper">
 
-            <table id="crewTable">
+            <table id="fleetTable">
 
                 <thead>
 
                     <tr>
                         <th>ID</th>
-                        <th>CREW MEMBER</th>
-                        <th>RANK</th>
-                        <th>NATIONALITY</th>
                         <th>VESSEL</th>
-                        <th>JOINING DATE</th>
+                        <th>IMO NUMBER</th>
+                        <th>FLAG</th>
+                        <th>TYPE</th>
+                        <th>CAPACITY</th>
                         <th>STATUS</th>
                     </tr>
 
                 </thead>
 
+
                 <tbody>
 
-                    {% for member in crew %}
+                    {% for ship in ships %}
 
                     <tr>
 
                         <td>
                             <span class="record-id">
-                                {{ "%02d"|format(member.crew_id) }}
+                                {{ "%02d"|format(ship.ship_id) }}
                             </span>
                         </td>
+
 
                         <td>
 
                             <div class="vessel-name">
 
                                 <span class="vessel-icon">
-                                    👨‍✈️
+                                    🚢
                                 </span>
 
                                 <div>
-
                                     <strong>
-                                        {{ member.crew_name }}
+                                        {{ ship.ship_name }}
                                     </strong>
 
                                     <small>
-                                        Crew ID {{ member.crew_id }}
+                                        Vessel ID {{ ship.ship_id }}
                                     </small>
-
                                 </div>
 
                             </div>
 
                         </td>
 
-                        <td>
-                            {{ member.crew_rank }}
-                        </td>
-
-                        <td>
-                            {{ member.nationality }}
-                        </td>
 
                         <td>
                             <span class="imo-number">
-                                {{ member.ship_name or "Unassigned" }}
+                                {{ ship.imo_number }}
                             </span>
                         </td>
 
+
                         <td>
-                            {{ member.joining_date.strftime("%d %b %Y") }}
+                            {{ ship.flag }}
                         </td>
 
+
+                        <td>
+                            {{ ship.ship_type }}
+                        </td>
+
+
+                        <td>
+                            {{ "{:,.0f}".format(ship.capacity) }}
+                            <span class="unit">
+                                MT
+                            </span>
+                        </td>
+
+
                         <td>
 
-                            {% if member.status == "On Board" %}
+                            {% if ship.status == "Active" %}
 
                                 <span class="status-badge active">
                                     <i></i>
-                                    On Board
+                                    Active
+                                </span>
+
+                            {% elif ship.status == "At Port" %}
+
+                                <span class="status-badge port">
+                                    <i></i>
+                                    At Port
                                 </span>
 
                             {% else %}
 
-                                <span class="status-badge port">
+                                <span class="status-badge maintenance">
                                     <i></i>
-                                    {{ member.status }}
+                                    Maintenance
                                 </span>
 
                             {% endif %}
@@ -194,18 +225,19 @@
 
         </div>
 
+
         <div class="table-footer">
 
             <span>
                 Showing
                 <strong id="visibleCount">
-                    {{ crew|length }}
+                    {{ ships|length }}
                 </strong>
-                crew members
+                vessels
             </span>
 
             <span>
-                OCEAN COMMAND · CREW DATABASE
+                OCEAN COMMAND · FLEET DATABASE
             </span>
 
         </div>
@@ -214,10 +246,11 @@
 
 </section>
 
+
 <script>
 
-const searchInput = document.getElementById("crewSearch");
-const tableRows = document.querySelectorAll("#crewTable tbody tr");
+const searchInput = document.getElementById("fleetSearch");
+const tableRows = document.querySelectorAll("#fleetTable tbody tr");
 const visibleCount = document.getElementById("visibleCount");
 
 searchInput.addEventListener("input", function () {

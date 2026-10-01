@@ -1,314 +1,280 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔧 Maintenance Management | OCEAN COMMAND</title>
+{% extends "base.html" %}
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+{% block title %}Maintenance | OCEAN COMMAND{% endblock %}
 
-        body {
-            background: #07111f;
-            color: #eaf2ff;
-            min-height: 100vh;
-        }
+{% block content %}
 
-        .header {
-            height: 75px;
-            background: #0b1b30;
-            border-bottom: 1px solid #1d3555;
-            display: flex;
-            align-items: center;
-            padding: 0 30px;
-        }
+<section class="data-page">
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+    <div class="page-heading">
 
-        .subtitle {
-            margin-left: 18px;
-            color: #8fa8c4;
-            font-size: 13px;
-            letter-spacing: 1px;
-        }
+        <div>
+            <p class="eyebrow">MAINTENANCE OPERATIONS</p>
 
-        .layout {
-            display: flex;
-            min-height: calc(100vh - 75px);
-        }
+            <h2>Maintenance Command</h2>
 
-        .sidebar {
-            width: 235px;
-            background: #091728;
-            border-right: 1px solid #1d3555;
-            padding: 25px 15px;
-        }
+            <p class="page-subtitle">
+                Monitor vessel maintenance, service schedules, costs and operational status.
+            </p>
+        </div>
 
-        .sidebar h3 {
-            color: #6f8ba8;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin: 0 12px 15px;
-        }
+        <div class="page-counter">
+            <span>MAINTENANCE RECORDS</span>
+            <strong>{{ maintenance|length }}</strong>
+        </div>
 
-        .nav-link {
-            display: block;
-            text-decoration: none;
-            color: #a9bdd4;
-            padding: 13px 14px;
-            border-radius: 8px;
-            margin-bottom: 6px;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        .nav-link:hover {
-            background: #102640;
-            color: #ffffff;
-        }
-
-        .nav-link.active {
-            background: #153657;
-            color: #ffffff;
-            border-left: 3px solid #58a6ff;
-        }
-
-        .content {
-            flex: 1;
-            padding: 35px;
-            overflow-x: auto;
-        }
-
-        .page-title {
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .page-description {
-            color: #829ab5;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .table-card {
-            background: #0b1b30;
-            border: 1px solid #1d3555;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .table-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #1d3555;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .search-box {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 14px 16px;
-            background: #111827;
-            border: 1px solid #374151;
-            border-radius: 10px;
-            color: #ffffff;
-            font-size: 14px;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        .search-box input:focus {
-            border-color: #2563eb;
-        }
-
-        .search-box input::placeholder {
-            color: #6b7280;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1100px;
-        }
-
-        th {
-            background: #0e223b;
-            color: #8fa8c4;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
-            text-align: left;
-            padding: 15px 18px;
-        }
-
-        td {
-            padding: 16px 18px;
-            border-top: 1px solid #172c45;
-            color: #c8d6e7;
-            font-size: 14px;
-        }
-
-        tr:hover td {
-            background: #0d2138;
-        }
-
-        .ship-name {
-            color: #ffffff;
-            font-weight: bold;
-        }
-
-        .maintenance-type {
-            color: #70b7ff;
-            font-weight: 600;
-        }
-
-        .cost {
-            color: #8ee6a8;
-            font-weight: bold;
-        }
-
-        .status {
-            display: inline-block;
-            padding: 6px 10px;
-            border-radius: 20px;
-            background: #153657;
-            color: #9ecbff;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .description {
-            color: #9fb2c8;
-            max-width: 280px;
-        }
-
-        .footer-note {
-            margin-top: 20px;
-            color: #607994;
-            font-size: 12px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="header">
-        <div class="logo">⚓ OCEAN COMMAND</div>
-        <div class="subtitle">MERCHANT FLEET CONTROL SYSTEM</div>
     </div>
 
-    <div class="layout">
+<div class="fleet-overview">
 
-        <aside class="sidebar">
+    <div class="fleet-overview-card">
 
-            <h3>Navigation</h3>
+        <span class="fleet-overview-icon">
+            🔧
+        </span>
 
-            <a href="/" class="nav-link">📊 Dashboard</a>
-            <a href="/fleet" class="nav-link">🚢 Fleet</a>
-            <a href="/crew" class="nav-link">👨‍✈️ Crew</a>
-            <a href="/voyages" class="nav-link">🌊 Voyages</a>
-            <a href="/cargo" class="nav-link">📦 Cargo</a>
-            <a href="/fuel" class="nav-link">⛽ Fuel</a>
-            <a href="/maintenance" class="nav-link active">🔧 Maintenance</a>
-            <a href="#" class="nav-link">📈 Reports</a>
+        <div>
+            <small>TOTAL RECORDS</small>
+            <strong>{{ maintenance|length }}</strong>
+        </div>
 
-        </aside>
+    </div>
 
-        <main class="content">
 
-            <h1 class="page-title">🔧 Maintenance Management</h1>
+    <div class="fleet-overview-card">
 
-            <p class="page-description">
-                Monitor ship maintenance activities, costs, schedules, status, and maintenance descriptions.
-            </p>
+        <span class="fleet-overview-icon active">
+            ✓
+        </span>
+
+        <div>
+            <small>COMPLETED</small>
+            <strong>{{ completed_maintenance }}</strong>
+        </div>
+
+    </div>
+
+
+    <div class="fleet-overview-card">
+
+        <span class="fleet-overview-icon port">
+            ◉
+        </span>
+
+        <div>
+            <small>IN PROGRESS</small>
+            <strong>{{ in_progress_maintenance }}</strong>
+        </div>
+
+    </div>
+
+
+    <div class="fleet-overview-card">
+
+        <span class="fleet-overview-icon maintenance">
+            ◷
+        </span>
+
+        <div>
+            <small>SCHEDULED</small>
+            <strong>{{ scheduled_maintenance }}</strong>
+        </div>
+
+    </div>
+
+</div>
+    <div class="table-panel">
+
+        <div class="table-toolbar">
+
+            <div>
+                <p class="eyebrow">MAINTENANCE DATABASE</p>
+                <h3>Maintenance Registry</h3>
+            </div>
 
             <div class="search-box">
-                <input type="text" id="maintenanceSearch" placeholder="🔎 Search maintenance by ship, type, status, cost, or ID..." onkeyup="searchMaintenance()">
-            </div>
 
-            <div class="table-card">
+                <span>⌕</span>
 
-                <div class="table-header">
-                    🔧 Maintenance Records
-                </div>
-
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>Maintenance ID</th>
-                            <th>Ship Name</th>
-                            <th>Maintenance Type</th>
-                            <th>Maintenance Date</th>
-                            <th>Cost</th>
-                            <th>Status</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        {% for record in maintenance_records %}
-
-                        <tr>
-                            <td>{{ record[0] }}</td>
-                            <td class="ship-name">{{ record[1] }}</td>
-                            <td class="maintenance-type">{{ record[2] }}</td>
-                            <td>{{ record[3] }}</td>
-                            <td class="cost">{{ record[4] }}</td>
-                            <td>
-                                <span class="status">{{ record[5] }}</span>
-                            </td>
-                            <td class="description">{{ record[6] }}</td>
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
+                <input
+                    type="text"
+                    id="maintenanceSearch"
+                    placeholder="Search maintenance..."
+                    autocomplete="off"
+                >
 
             </div>
 
-            <div class="footer-note">
-                OCEAN COMMAND • Maintenance monitoring module
-            </div>
+        </div>
 
-        </main>
+
+        <div class="table-wrapper">
+
+            <table id="maintenanceTable">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>VESSEL</th>
+                        <th>MAINTENANCE TYPE</th>
+                        <th>DATE</th>
+                        <th>COST</th>
+                        <th>STATUS</th>
+                        <th>DESCRIPTION</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in maintenance %}
+
+                    <tr>
+
+                        <td>
+                            <span class="record-id">
+                                {{ "%02d"|format(item.maintenance_id) }}
+                            </span>
+                        </td>
+
+
+                        <td>
+
+                            <div class="vessel-name">
+
+                                <span class="vessel-icon">
+                                    🔧
+                                </span>
+
+                                <div>
+                                    <strong>
+                                        {{ item.ship_name }}
+                                    </strong>
+
+                                    <small>
+                                        Vessel ID {{ item.ship_id }}
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+                            {{ item.maintenance_type }}
+                        </td>
+
+
+                        <td>
+                            {{ item.maintenance_date.strftime("%d %b %Y") }}
+                        </td>
+
+
+                        <td>
+                            ₹{{ "{:,.0f}".format(item.cost) }}
+                        </td>
+
+
+                        <td>
+
+                            {% if item.maintenance_status == "Completed" %}
+
+                                <span class="status-badge active">
+                                    <i></i>
+                                    Completed
+                                </span>
+
+                            {% elif item.maintenance_status == "In Progress" %}
+
+                                <span class="status-badge port">
+                                    <i></i>
+                                    In Progress
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge maintenance">
+                                    <i></i>
+                                    Scheduled
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+                            {{ item.description }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="table-footer">
+
+            <span>
+                Showing
+                <strong id="visibleCount">
+                    {{ maintenance|length }}
+                </strong>
+                maintenance records
+            </span>
+
+            <span>
+                OCEAN COMMAND · MAINTENANCE DATABASE
+            </span>
+
+        </div>
 
     </div>
 
+</section>
+
+
 <script>
-    function searchMaintenance() {
-        const input = document.getElementById("maintenanceSearch");
-        const filter = input.value.toLowerCase();
-        const rows = document.querySelectorAll("tbody tr");
 
-        rows.forEach(function(row) {
-            const text = row.textContent.toLowerCase();
+const searchInput = document.getElementById("maintenanceSearch");
+const tableRows = document.querySelectorAll("#maintenanceTable tbody tr");
+const visibleCount = document.getElementById("visibleCount");
 
-            if (text.includes(filter)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
+searchInput.addEventListener("input", function () {
+
+    const searchTerm = this.value.toLowerCase().trim();
+
+    let count = 0;
+
+    tableRows.forEach(function (row) {
+
+        const rowText = row.textContent.toLowerCase();
+
+        if (rowText.includes(searchTerm)) {
+
+            row.style.display = "";
+            count++;
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+    visibleCount.textContent = count;
+
+});
+
 </script>
 
-</body>
-</html>
+{% endblock %}

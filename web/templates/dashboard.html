@@ -1,264 +1,476 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
+{% block title %}Command Center | OCEAN COMMAND{% endblock %}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
 
-    <title>OCEAN COMMAND</title>
-</head>
+<section class="dashboard">
 
-<body>
+    <!-- COMMAND HEADER -->
 
-    <h1>⚓ OCEAN COMMAND</h1>
+    <div class="welcome">
 
-    <h2>Merchant Fleet Control System</h2>
+        <div>
 
-    <p>🌊 Web Interface Online</p>
+            <p class="eyebrow">
+                OCEAN COMMAND · OPERATIONS CENTER
+            </p>
 
-</body>
+            <h2>
+                Fleet Command Dashboard
+            </h2>
 
-</html>
-<!DOCTYPE html>
-<html lang="en">
+            <p class="subtitle">
+                Real-time overview of vessels, crew, voyages and cargo operations.
+            </p>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </div>
 
-    <title>OCEAN COMMAND</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+        <div class="command-status">
 
-        body {
-            background: #f4f7fb;
-            color: #1d2939;
-        }
+            <span class="status-dot"></span>
 
-        .header {
-            background: #0b1f33;
-            color: white;
-            padding: 22px 35px;
-        }
+            SYSTEM ONLINE
 
-        .header h1 {
-            font-size: 30px;
-            margin-bottom: 5px;
-        }
-
-        .header p {
-            color: #b8c7d9;
-            font-size: 14px;
-        }
-
-        .layout {
-            display: flex;
-            min-height: calc(100vh - 88px);
-        }
-
-        .sidebar {
-            width: 220px;
-            background: #102a43;
-            padding: 25px 15px;
-        }
-
-        .sidebar h3 {
-            color: white;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .nav-item {
-            color: #d9e2ec;
-            padding: 13px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-        }
-
-        .nav-item.active {
-            background: #1f5f8b;
-            color: white;
-        }
-
-        .content {
-            flex: 1;
-            padding: 30px;
-        }
-
-        .welcome {
-            margin-bottom: 25px;
-        }
-
-        .welcome h2 {
-            font-size: 25px;
-            margin-bottom: 6px;
-        }
-
-        .welcome p {
-            color: #667085;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 22px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .card-title {
-            color: #667085;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .card-value {
-            font-size: 30px;
-            font-weight: bold;
-            color: #0b1f33;
-        }
-
-        .section {
-            background: white;
-            padding: 22px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-            margin-bottom: 20px;
-        }
-
-        .section h3 {
-            margin-bottom: 18px;
-        }
-
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .status {
-            padding: 18px;
-            border-radius: 10px;
-            background: #f7f9fc;
-        }
-
-        .status strong {
-            display: block;
-            font-size: 25px;
-            margin-bottom: 5px;
-        }
-
-        .status span {
-            color: #667085;
-            font-size: 14px;
-        }
-
-        .online {
-            color: #16803c;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="header">
-        <h1>⚓ OCEAN COMMAND</h1>
-        <p>MERCHANT FLEET CONTROL SYSTEM</p>
-    </div>
-
-    <div class="layout">
-
-        <aside class="sidebar">
-
-            <h3>🚢 NAVIGATION</h3>
-
-            <div class="nav-item active">🏠 Dashboard</div>
-            <div class="nav-item">🚢 Fleet</div>
-            <div class="nav-item">👨‍✈️ Crew</div>
-            <div class="nav-item">🌊 Voyages</div>
-            <div class="nav-item">📦 Cargo</div>
-            <div class="nav-item">⛽ Fuel</div>
-            <div class="nav-item">🔧 Maintenance</div>
-            <div class="nav-item">📊 Reports</div>
-
-        </aside>
-
-        <main class="content">
-
-            <div class="welcome">
-                <h2>Fleet Dashboard</h2>
-                <p>Real-time overview of your merchant fleet operations.</p>
-            </div>
-            <div class="cards">
-
-                <div class="card">
-                    <div class="card-title">🚢 TOTAL SHIPS</div>
-                    <div class="card-value">{{ stats["ships"] }}</div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">👨‍✈️ CREW MEMBERS</div>
-                    <div class="card-value">{{ stats["crew"] }}</div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">🌊 VOYAGES</div>
-                    <div class="card-value">{{ stats["voyages"] }}</div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">📦 CARGO RECORDS</div>
-                    <div class="card-value">{{ stats["cargo"] }}</div>
-                </div>
-
-            </div>
-
-                <div class="status-grid">
-
-                    <div class="status">
-                        <strong class="online">3</strong>
-                        <span>Active Ships</span>
-                    </div>
-
-                    <div class="status">
-                        <strong>1</strong>
-                        <span>At Port</span>
-                    </div>
-
-                    <div class="status">
-                        <strong>1</strong>
-                        <span>Under Maintenance</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="section">
-
-                <h3>🌊 System Status</h3>
-
-                <p class="online">● Web Interface Online</p>
-
-            </div>
-
-        </main>
+        </div>
 
     </div>
 
-</body>
 
-</html>
+
+    <!-- MAIN STAT CARDS -->
+
+    <div class="dashboard-grid">
+
+
+        <div class="stat-card">
+
+            <div class="card-icon">
+                🚢
+            </div>
+
+            <div>
+
+                <p>FLEET</p>
+
+                <h3>
+                    {{ ships|length }}
+                </h3>
+
+                <span>
+                    Registered Vessels
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="card-icon">
+                👨‍✈️
+            </div>
+
+            <div>
+
+                <p>CREW</p>
+
+                <h3>
+                    {{ crew|length }}
+                </h3>
+
+                <span>
+                    Registered Members
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="card-icon">
+                🧭
+            </div>
+
+            <div>
+
+                <p>VOYAGES</p>
+
+                <h3>
+                    {{ voyages|length }}
+                </h3>
+
+                <span>
+                    Recorded Voyages
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="card-icon">
+                📦
+            </div>
+
+            <div>
+
+                <p>CARGO</p>
+
+                <h3>
+                    {{ cargo|length }}
+                </h3>
+
+                <span>
+                    Cargo Records
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="card-icon">
+                ⛽
+            </div>
+
+            <div>
+
+                <p>FUEL</p>
+
+                <h3>
+                    {{ fuel_records|length }}
+                </h3>
+
+                <span>
+                    Fuel Records
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="card-icon">
+                🔧
+            </div>
+
+            <div>
+
+                <p>MAINTENANCE</p>
+
+                <h3>
+                    {{ maintenance|length }}
+                </h3>
+
+                <span>
+                    Service Records
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- OPERATIONS AREA -->
+
+    <div class="dashboard-lower">
+
+
+        <!-- FLEET STATUS -->
+
+        <div class="panel">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        FLEET STATUS
+                    </p>
+
+                    <h3>
+                        Vessel Overview
+                    </h3>
+
+                </div>
+
+                <span class="panel-badge">
+                    LIVE
+                </span>
+
+            </div>
+
+
+            <div class="status-list">
+
+
+                <div class="status-row">
+
+                    <div>
+
+                        <span>
+                            Active Vessels
+                        </span>
+
+                        <small>
+                            Currently operational
+                        </small>
+
+                    </div>
+
+                    <strong>
+                        {{ active_ships }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="status-row">
+
+                    <div>
+
+                        <span>
+                            At Port
+                        </span>
+
+                        <small>
+                            Currently docked
+                        </small>
+
+                    </div>
+
+                    <strong>
+                        {{ at_port_ships }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="status-row">
+
+                    <div>
+
+                        <span>
+                            Maintenance
+                        </span>
+
+                        <small>
+                            Under service
+                        </small>
+
+                    </div>
+
+                    <strong>
+                        {{ maintenance_ships }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CURRENT VOYAGES -->
+
+        <div class="panel">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        VOYAGE OPERATIONS
+                    </p>
+
+                    <h3>
+                        Current Activity
+                    </h3>
+
+                </div>
+
+                <span class="panel-badge">
+                    ACTIVE
+                </span>
+
+            </div>
+
+
+            <div class="activity">
+
+
+                {% if current_voyages %}
+
+
+                    {% for voyage in current_voyages[:3] %}
+
+
+                    <div class="activity-item">
+
+
+                        <span class="activity-number">
+                            {{ "%02d"|format(loop.index) }}
+                        </span>
+
+
+                        <div>
+
+                            <strong>
+
+                                {% for ship in ships %}
+
+                                    {% if ship.ship_id == voyage.ship_id %}
+
+                                        {{ ship.ship_name }}
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </strong>
+
+
+                            <p>
+
+                                {{ voyage.departure_port }}
+
+                                <span class="route-arrow">
+                                    →
+                                </span>
+
+                                {{ voyage.destination_port }}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    {% endfor %}
+
+
+                {% else %}
+
+
+                    <div class="empty-state">
+
+                        <span>
+                            🧭
+                        </span>
+
+                        <p>
+                            No voyages currently in progress.
+                        </p>
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- COMMAND INFORMATION STRIP -->
+
+    <div class="command-strip">
+
+
+        <div class="command-strip-item">
+
+            <span class="strip-icon">
+                ⚓
+            </span>
+
+            <div>
+
+                <small>
+                    FLEET STATUS
+                </small>
+
+                <strong>
+                    Operational
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="command-strip-item">
+
+            <span class="strip-icon">
+                🌐
+            </span>
+
+            <div>
+
+                <small>
+                    GLOBAL OPERATIONS
+                </small>
+
+                <strong>
+                    {{ ships|length }} Vessels Tracked
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="command-strip-item">
+
+            <span class="strip-icon">
+                📡
+            </span>
+
+            <div>
+
+                <small>
+                    COMMAND LINK
+                </small>
+
+                <strong>
+                    Connected
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}OCEAN COMMAND{% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         TOP HEADER
+         ===================================================== -->
+
+    <header class="top-header">
+
+        <div class="brand">
+
+            <h1>
+                OCEAN COMMAND
+            </h1>
+
+            <span>
+                MARITIME FLEET MANAGEMENT SYSTEM
+            </span>
+
+        </div>
+
+
+        <div class="developer">
+
+            <span>
+                WEB DEVELOPER
+            </span>
+
+            <strong>
+                Shivam Kadam
+            </strong>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         FLOATING SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-inner">
+
+
+            <div class="sidebar-title">
+
+                <span>
+                    OC
+                </span>
+
+                <p>
+                    COMMAND
+                </p>
+
+            </div>
+
+
+
+            <nav class="sidebar-nav">
+
+
+                <!-- DASHBOARD -->
+
+                <a
+                    href="/"
+                    class="nav-item {% if request.path == '/' %}active{% endif %}"
+                >
+
+                    <span class="nav-icon">
+                        ⌂
+                    </span>
+
+                    <span class="nav-label">
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+
+                <!-- FLEET -->
+
+                <a
+                    href="/ships"
+                    class="nav-item {% if request.path == '/ships' %}active{% endif %}"
+                >
+
+                    <span class="nav-icon">
+                        🚢
+                    </span>
+
+                    <span class="nav-label">
+                        Fleet
+                    </span>
+
+                </a>
+
+
+
+                <!-- CREW -->
+
+                <a
+                    href="/crew"
+                    class="nav-item {% if request.path == '/crew' %}active{% endif %}"
+                >
+
+                    <span class="nav-icon">
+                        👨‍✈️
+                    </span>
+
+                    <span class="nav-label">
+                        Crew
+                    </span>
+
+                </a>
+
+
+
+                <!-- VOYAGES -->
+
+                <a
+                    href="/voyages"
+                    class="nav-item {% if request.path == '/voyages' %}active{% endif %}"
+                >
+
+                    <span class="nav-icon">
+                        🧭
+                    </span>
+
+                    <span class="nav-label">
+                        Voyages
+                    </span>
+
+                </a>
+
+
+
+                <!-- CARGO -->
+
+                <a
+                    href="/cargo"
+                    class="nav-item {% if request.path == '/cargo' %}active{% endif %}"
+                >
+
+                    <span class="nav-icon">
+                        📦
+                    </span>
+
+                    <span class="nav-label">
+                        Cargo
+                    </span>
+
+                </a>
+
+
+
+                <!-- FUEL -->
+
+                <a
+                    href="/fuel"
+                    class="nav-item {% if request.path == '/fuel' %}active{% endif %}"
+                >
+
+                    <span class="nav-icon">
+                        ⛽
+                    </span>
+
+                    <span class="nav-label">
+                        Fuel
+                    </span>
+
+                </a>
+
+
+
+                <!-- MAINTENANCE -->
+
+                <a
+                    href="/maintenance"
+                    class="nav-item {% if request.path == '/maintenance' %}active{% endif %}"
+                >
+
+                    <span class="nav-icon">
+                        🔧
+                    </span>
+
+                    <span class="nav-label">
+                        Maintenance
+                    </span>
+
+                </a>
+
+
+            </nav>
+
+
+
+            <!-- SIDEBAR FOOTER -->
+
+            <div class="sidebar-footer">
+
+                <span class="online-dot"></span>
+
+                <div>
+
+                    <strong>
+                        COMMAND ONLINE
+                    </strong>
+
+                    <small>
+                        System Operational
+                    </small>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+</body>
+
+</html>

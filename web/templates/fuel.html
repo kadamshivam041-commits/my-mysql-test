@@ -1,299 +1,260 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⛽ Fuel Management | OCEAN COMMAND</title>
+{% extends "base.html" %}
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+{% block title %}Fuel | OCEAN COMMAND{% endblock %}
 
-        body {
-            background: #07111f;
-            color: #eaf2ff;
-            min-height: 100vh;
-        }
+{% block content %}
 
-        .header {
-            height: 75px;
-            background: #0b1b30;
-            border-bottom: 1px solid #1d3555;
-            display: flex;
-            align-items: center;
-            padding: 0 30px;
-        }
+<section class="data-page">
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+    <div class="page-heading">
 
-        .subtitle {
-            margin-left: 18px;
-            color: #8fa8c4;
-            font-size: 13px;
-            letter-spacing: 1px;
-        }
+        <div>
+            <p class="eyebrow">FUEL OPERATIONS</p>
 
-        .layout {
-            display: flex;
-            min-height: calc(100vh - 75px);
-        }
+            <h2>Fuel Command</h2>
 
-        .sidebar {
-            width: 235px;
-            background: #091728;
-            border-right: 1px solid #1d3555;
-            padding: 25px 15px;
-        }
+            <p class="page-subtitle">
+                Monitor vessel fuel usage, quantities, costs and bunkering ports.
+            </p>
+        </div>
 
-        .sidebar h3 {
-            color: #6f8ba8;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin: 0 12px 15px;
-        }
+        <div class="page-counter">
+            <span>FUEL RECORDS</span>
+            <strong>{{ fuel_records|length }}</strong>
+        </div>
 
-        .nav-link {
-            display: block;
-            text-decoration: none;
-            color: #a9bdd4;
-            padding: 13px 14px;
-            border-radius: 8px;
-            margin-bottom: 6px;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        .nav-link:hover {
-            background: #102640;
-            color: #ffffff;
-        }
-
-        .nav-link.active {
-            background: #153657;
-            color: #ffffff;
-            border-left: 3px solid #58a6ff;
-        }
-
-        .content {
-            flex: 1;
-            padding: 35px;
-            overflow-x: auto;
-        }
-
-        .page-title {
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .page-description {
-            color: #829ab5;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .table-card {
-            background: #0b1b30;
-            border: 1px solid #1d3555;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .table-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid #1d3555;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .search-box {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 14px 16px;
-            background: #111827;
-            border: 1px solid #374151;
-            border-radius: 10px;
-            color: #ffffff;
-            font-size: 14px;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        .search-box input:focus {
-            border-color: #2563eb;
-        }
-
-        .search-box input::placeholder {
-            color: #6b7280;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 900px;
-        }
-
-        th {
-            background: #0e223b;
-            color: #8fa8c4;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
-            text-align: left;
-            padding: 15px 18px;
-        }
-
-        td {
-            padding: 16px 18px;
-            border-top: 1px solid #172c45;
-            color: #c8d6e7;
-            font-size: 14px;
-        }
-
-        tr:hover td {
-            background: #0d2138;
-        }
-
-        .ship-name {
-            color: #ffffff;
-            font-weight: bold;
-        }
-
-        .fuel-type {
-            color: #70b7ff;
-        }
-
-        .quantity {
-            font-weight: bold;
-        }
-
-        .cost {
-            font-weight: bold;
-            color: #8ee6a8;
-        }
-
-        .footer-note {
-            margin-top: 20px;
-            color: #607994;
-            font-size: 12px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="header">
-        <div class="logo">⚓ OCEAN COMMAND</div>
-        <div class="subtitle">MERCHANT FLEET CONTROL SYSTEM</div>
     </div>
 
-    <div class="layout">
+<div class="fleet-overview">
 
-        <aside class="sidebar">
+    <div class="fleet-overview-card">
 
-            <h3>Navigation</h3>
+        <span class="fleet-overview-icon">
+            ⛽
+        </span>
 
-            <a href="/" class="nav-link">📊 Dashboard</a>
-            <a href="/fleet" class="nav-link">🚢 Fleet</a>
-            <a href="/crew" class="nav-link">👨‍✈️ Crew</a>
-            <a href="/voyages" class="nav-link">🌊 Voyages</a>
-            <a href="/cargo" class="nav-link">📦 Cargo</a>
-            <a href="/fuel" class="nav-link active">⛽ Fuel</a>
-            <a href="#" class="nav-link">🔧 Maintenance</a>
-            <a href="#" class="nav-link">📈 Reports</a>
+        <div>
+            <small>FUEL RECORDS</small>
+            <strong>{{ fuel_records|length }}</strong>
+        </div>
 
-        </aside>
+    </div>
 
-        <main class="content">
 
-            <h1 class="page-title">⛽ Fuel Management</h1>
+    <div class="fleet-overview-card">
 
-            <p class="page-description">
-                Monitor fuel consumption, fuel costs, bunkering dates, and ports across the merchant fleet.
-            </p>
+        <span class="fleet-overview-icon active">
+            ◉
+        </span>
+
+        <div>
+            <small>TOTAL QUANTITY</small>
+            <strong>{{ "{:,.0f}".format(total_fuel_quantity) }} MT</strong>
+        </div>
+
+    </div>
+
+
+    <div class="fleet-overview-card">
+
+        <span class="fleet-overview-icon port">
+            ₹
+        </span>
+
+        <div>
+            <small>TOTAL COST</small>
+            <strong>₹{{ "{:,.0f}".format(total_fuel_cost) }}</strong>
+        </div>
+
+    </div>
+
+
+    <div class="fleet-overview-card">
+
+        <span class="fleet-overview-icon maintenance">
+            ◈
+        </span>
+
+        <div>
+            <small>DIESEL / HFO</small>
+            <strong>{{ marine_diesel_records }} / {{ heavy_fuel_records }}</strong>
+        </div>
+
+    </div>
+
+</div>
+    <div class="table-panel">
+
+        <div class="table-toolbar">
+
+            <div>
+                <p class="eyebrow">FUEL DATABASE</p>
+                <h3>Bunkering Registry</h3>
+            </div>
 
             <div class="search-box">
-                <input type="text" id="fuelSearch" placeholder="🔎 Search fuel by ship, fuel type, port, cost, or ID..." onkeyup="searchFuel()">
-            </div>
 
-            <div class="table-card">
+                <span>⌕</span>
 
-                <div class="table-header">
-                    ⛽ Fuel Records
-                </div>
-
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>Fuel ID</th>
-                            <th>Ship Name</th>
-                            <th>Fuel Type</th>
-                            <th>Quantity</th>
-                            <th>Cost</th>
-                            <th>Fuel Date</th>
-                            <th>Port</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        {% for record in fuel_records %}
-
-                        <tr>
-                            <td>{{ record[0] }}</td>
-                            <td class="ship-name">{{ record[1] }}</td>
-                            <td class="fuel-type">{{ record[2] }}</td>
-                            <td class="quantity">{{ record[3] }}</td>
-                            <td class="cost">{{ record[4] }}</td>
-                            <td>{{ record[5] }}</td>
-                            <td>{{ record[6] }}</td>
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
+                <input
+                    type="text"
+                    id="fuelSearch"
+                    placeholder="Search fuel records..."
+                    autocomplete="off"
+                >
 
             </div>
 
-            <div class="footer-note">
-                OCEAN COMMAND • Fuel monitoring module
-            </div>
+        </div>
 
-        </main>
+
+        <div class="table-wrapper">
+
+            <table id="fuelTable">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>VESSEL</th>
+                        <th>FUEL TYPE</th>
+                        <th>QUANTITY</th>
+                        <th>COST</th>
+                        <th>DATE</th>
+                        <th>PORT</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for fuel in fuel_records %}
+
+                    <tr>
+
+                        <td>
+                            <span class="record-id">
+                                {{ "%02d"|format(fuel.fuel_id) }}
+                            </span>
+                        </td>
+
+
+                        <td>
+
+                            <div class="vessel-name">
+
+                                <span class="vessel-icon">
+                                    ⛽
+                                </span>
+
+                                <div>
+                                    <strong>
+                                        {{ fuel.ship_name }}
+                                    </strong>
+
+                                    <small>
+                                        Vessel ID {{ fuel.ship_id }}
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+                            {{ fuel.fuel_type }}
+                        </td>
+
+
+                        <td>
+                            {{ "{:,.0f}".format(fuel.quantity) }}
+                            <span class="unit">
+                                MT
+                            </span>
+                        </td>
+
+
+                        <td>
+                            ₹{{ "{:,.0f}".format(fuel.cost) }}
+                        </td>
+
+
+                        <td>
+                            {{ fuel.fuel_date.strftime("%d %b %Y") }}
+                        </td>
+
+
+                        <td>
+                            {{ fuel.port }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="table-footer">
+
+            <span>
+                Showing
+                <strong id="visibleCount">
+                    {{ fuel_records|length }}
+                </strong>
+                fuel records
+            </span>
+
+            <span>
+                OCEAN COMMAND · FUEL DATABASE
+            </span>
+
+        </div>
 
     </div>
 
-    <script>
-        function searchFuel() {
-            const input = document.getElementById("fuelSearch");
-            const filter = input.value.toLowerCase();
-            const rows = document.querySelectorAll("tbody tr");
+</section>
 
-            rows.forEach(function(row) {
-                const text = row.textContent.toLowerCase();
 
-                if (text.includes(filter)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
+<script>
+
+const searchInput = document.getElementById("fuelSearch");
+const tableRows = document.querySelectorAll("#fuelTable tbody tr");
+const visibleCount = document.getElementById("visibleCount");
+
+searchInput.addEventListener("input", function () {
+
+    const searchTerm = this.value.toLowerCase().trim();
+
+    let count = 0;
+
+    tableRows.forEach(function (row) {
+
+        const rowText = row.textContent.toLowerCase();
+
+        if (rowText.includes(searchTerm)) {
+
+            row.style.display = "";
+            count++;
+
+        } else {
+
+            row.style.display = "none";
+
         }
-    </script>
-</body>
-</html>
+
+    });
+
+    visibleCount.textContent = count;
+
+});
+
+</script>
+
+{% endblock %}

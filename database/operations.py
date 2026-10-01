@@ -3,10 +3,20 @@ from database.connection import create_connection
 
 def get_all_ships():
     connection = create_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor(dictionary=True)
 
-    query = "SELECT * FROM ships"
-    cursor.execute(query)
+    cursor.execute("""
+        SELECT
+            ship_id,
+            ship_name,
+            imo_number,
+            flag,
+            ship_type,
+            capacity,
+            status
+        FROM ships
+        ORDER BY ship_id
+    """)
 
     ships = cursor.fetchall()
 
@@ -14,27 +24,25 @@ def get_all_ships():
     connection.close()
 
     return ships
-
-
 def get_all_crew():
     connection = create_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor(dictionary=True)
 
-    query = """
+    cursor.execute("""
         SELECT
             crew.crew_id,
             crew.crew_name,
             crew.crew_rank,
             crew.nationality,
+            crew.ship_id,
             ships.ship_name,
             crew.joining_date,
             crew.status
         FROM crew
-        JOIN ships
-        ON crew.ship_id = ships.ship_id
-    """
-
-    cursor.execute(query)
+        LEFT JOIN ships
+            ON crew.ship_id = ships.ship_id
+        ORDER BY crew.crew_id
+    """)
 
     crew = cursor.fetchall()
 
@@ -42,15 +50,14 @@ def get_all_crew():
     connection.close()
 
     return crew
-
-
 def get_all_voyages():
     connection = create_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor(dictionary=True)
 
-    query = """
+    cursor.execute("""
         SELECT
             voyages.voyage_id,
+            voyages.ship_id,
             ships.ship_name,
             voyages.departure_port,
             voyages.destination_port,
@@ -58,11 +65,10 @@ def get_all_voyages():
             voyages.arrival_date,
             voyages.voyage_status
         FROM voyages
-        JOIN ships
-        ON voyages.ship_id = ships.ship_id
-    """
-
-    cursor.execute(query)
+        LEFT JOIN ships
+            ON voyages.ship_id = ships.ship_id
+        ORDER BY voyages.voyage_id
+    """)
 
     voyages = cursor.fetchall()
 
@@ -72,11 +78,12 @@ def get_all_voyages():
     return voyages
 def get_all_cargo():
     connection = create_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor(dictionary=True)
 
-    query = """
+    cursor.execute("""
         SELECT
             cargo.cargo_id,
+            cargo.voyage_id,
             ships.ship_name,
             cargo.cargo_type,
             cargo.quantity,
@@ -84,13 +91,12 @@ def get_all_cargo():
             cargo.destination,
             cargo.cargo_status
         FROM cargo
-        JOIN voyages
-        ON cargo.voyage_id = voyages.voyage_id
-        JOIN ships
-        ON voyages.ship_id = ships.ship_id
-    """
-
-    cursor.execute(query)
+        LEFT JOIN voyages
+            ON cargo.voyage_id = voyages.voyage_id
+        LEFT JOIN ships
+            ON voyages.ship_id = ships.ship_id
+        ORDER BY cargo.cargo_id
+    """)
 
     cargo = cursor.fetchall()
 
@@ -100,11 +106,12 @@ def get_all_cargo():
     return cargo
 def get_all_fuel_records():
     connection = create_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor(dictionary=True)
 
-    query = """
+    cursor.execute("""
         SELECT
             fuel_records.fuel_id,
+            fuel_records.ship_id,
             ships.ship_name,
             fuel_records.fuel_type,
             fuel_records.quantity,
@@ -112,11 +119,10 @@ def get_all_fuel_records():
             fuel_records.fuel_date,
             fuel_records.port
         FROM fuel_records
-        JOIN ships
-        ON fuel_records.ship_id = ships.ship_id
-    """
-
-    cursor.execute(query)
+        LEFT JOIN ships
+            ON fuel_records.ship_id = ships.ship_id
+        ORDER BY fuel_records.fuel_id
+    """)
 
     fuel_records = cursor.fetchall()
 
@@ -126,11 +132,12 @@ def get_all_fuel_records():
     return fuel_records
 def get_all_maintenance():
     connection = create_connection()
-    cursor = connection.cursor()
+    cursor = connection.cursor(dictionary=True)
 
-    query = """
+    cursor.execute("""
         SELECT
             maintenance.maintenance_id,
+            maintenance.ship_id,
             ships.ship_name,
             maintenance.maintenance_type,
             maintenance.maintenance_date,
@@ -138,11 +145,10 @@ def get_all_maintenance():
             maintenance.maintenance_status,
             maintenance.description
         FROM maintenance
-        JOIN ships
-        ON maintenance.ship_id = ships.ship_id
-    """
-
-    cursor.execute(query)
+        LEFT JOIN ships
+            ON maintenance.ship_id = ships.ship_id
+        ORDER BY maintenance.maintenance_id
+    """)
 
     maintenance = cursor.fetchall()
 
@@ -150,42 +156,3 @@ def get_all_maintenance():
     connection.close()
 
     return maintenance
-def get_dashboard_stats():
-    connection = create_connection()
-    cursor = connection.cursor()
-
-    stats = {}
-
-    cursor.execute("SELECT COUNT(*) FROM ships")
-    stats["ships"] = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM crew")
-    stats["crew"] = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM voyages")
-    stats["voyages"] = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM cargo")
-    stats["cargo"] = cursor.fetchone()[0]
-
-    cursor.close()
-    connection.close()
-
-    return stats
-def get_fleet_status_report():
-    connection = create_connection()
-    cursor = connection.cursor()
-
-    query = """
-        SELECT status, COUNT(*)
-        FROM ships
-        GROUP BY status
-    """
-
-    cursor.execute(query)
-    report = cursor.fetchall()
-
-    cursor.close()
-    connection.close()
-
-    return report
