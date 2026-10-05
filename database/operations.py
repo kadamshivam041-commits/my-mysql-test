@@ -1,9 +1,17 @@
 from database.connection import create_connection
 
 
+def get_cursor(connection):
+    if connection.__class__.__module__.startswith("psycopg2"):
+        from psycopg2.extras import RealDictCursor
+        return connection.cursor(cursor_factory=RealDictCursor)
+
+    return connection.cursor(dictionary=True)
+
+
 def get_all_ships():
     connection = create_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = get_cursor(connection)
 
     cursor.execute("""
         SELECT
@@ -28,7 +36,7 @@ def get_all_ships():
 
 def get_all_crew():
     connection = create_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = get_cursor(connection)
 
     cursor.execute("""
         SELECT
@@ -56,7 +64,7 @@ def get_all_crew():
 
 def get_all_voyages():
     connection = create_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = get_cursor(connection)
 
     cursor.execute("""
         SELECT
@@ -84,7 +92,7 @@ def get_all_voyages():
 
 def get_all_cargo():
     connection = create_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = get_cursor(connection)
 
     cursor.execute("""
         SELECT
@@ -114,7 +122,7 @@ def get_all_cargo():
 
 def get_all_fuel_records():
     connection = create_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = get_cursor(connection)
 
     cursor.execute("""
         SELECT
@@ -142,7 +150,7 @@ def get_all_fuel_records():
 
 def get_all_maintenance():
     connection = create_connection()
-    cursor = connection.cursor(dictionary=True)
+    cursor = get_cursor(connection)
 
     cursor.execute("""
         SELECT
