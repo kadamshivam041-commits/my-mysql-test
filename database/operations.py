@@ -24,6 +24,8 @@ def get_all_ships():
     connection.close()
 
     return ships
+
+
 def get_all_crew():
     connection = create_connection()
     cursor = connection.cursor(dictionary=True)
@@ -50,6 +52,8 @@ def get_all_crew():
     connection.close()
 
     return crew
+
+
 def get_all_voyages():
     connection = create_connection()
     cursor = connection.cursor(dictionary=True)
@@ -76,6 +80,8 @@ def get_all_voyages():
     connection.close()
 
     return voyages
+
+
 def get_all_cargo():
     connection = create_connection()
     cursor = connection.cursor(dictionary=True)
@@ -104,6 +110,8 @@ def get_all_cargo():
     connection.close()
 
     return cargo
+
+
 def get_all_fuel_records():
     connection = create_connection()
     cursor = connection.cursor(dictionary=True)
@@ -130,6 +138,8 @@ def get_all_fuel_records():
     connection.close()
 
     return fuel_records
+
+
 def get_all_maintenance():
     connection = create_connection()
     cursor = connection.cursor(dictionary=True)
@@ -156,3 +166,104 @@ def get_all_maintenance():
     connection.close()
 
     return maintenance
+
+
+def insert_ship(
+    ship_name,
+    imo_number,
+    flag,
+    ship_type,
+    capacity,
+    status
+):
+    connection = create_connection()
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute("""
+            INSERT INTO ships
+            (ship_name, imo_number, flag, ship_type, capacity, status)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (
+            ship_name,
+            imo_number,
+            flag,
+            ship_type,
+            capacity,
+            status
+        ))
+
+        connection.commit()
+        return True
+
+    except Exception:
+        connection.rollback()
+        return False
+
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def delete_ship(ship_id):
+    connection = create_connection()
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute("""
+            DELETE FROM ships
+            WHERE ship_id = %s
+        """, (ship_id,))
+
+        connection.commit()
+        return cursor.rowcount > 0
+
+    except Exception:
+        connection.rollback()
+        return False
+
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def update_ship(
+    ship_id,
+    ship_name,
+    flag,
+    ship_type,
+    capacity,
+    status
+):
+    connection = create_connection()
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute("""
+            UPDATE ships
+            SET
+                ship_name = %s,
+                flag = %s,
+                ship_type = %s,
+                capacity = %s,
+                status = %s
+            WHERE ship_id = %s
+        """, (
+            ship_name,
+            flag,
+            ship_type,
+            capacity,
+            status,
+            ship_id
+        ))
+
+        connection.commit()
+        return cursor.rowcount > 0
+
+    except Exception:
+        connection.rollback()
+        return False
+
+    finally:
+        cursor.close()
+        connection.close()

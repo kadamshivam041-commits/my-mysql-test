@@ -2948,3 +2948,385 @@ tbody tr:hover .vessel-icon {
     }
 
 }
+/* =========================================================
+   FLEET CRUD CONTROLS
+   ========================================================= */
+
+.fleet-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+/* ADD SHIP BUTTON */
+
+.fleet-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 42px;
+    padding: 0 17px;
+
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 10px;
+
+    background: rgba(212, 175, 55, 0.08);
+    color: #d4af37;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.fleet-action-button span {
+    font-size: 18px;
+    line-height: 1;
+}
+
+
+.fleet-action-button:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: rgba(212, 175, 55, 0.65);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.22),
+        0 0 18px rgba(212, 175, 55, 0.08);
+}
+
+
+.fleet-action-button:active {
+    transform: translateY(0);
+}
+
+
+/* ADD SHIP PANEL */
+
+.ship-form-panel {
+    margin: 0 0 22px;
+
+    padding: 24px;
+
+    border: 1px solid rgba(212, 175, 55, 0.20);
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(212, 175, 55, 0.055),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+
+.ship-form-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+
+.ship-form-header h3 {
+    margin: 5px 0 0;
+}
+
+
+.ship-form-close {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.035);
+    color: rgba(255, 255, 255, 0.70);
+
+    font-size: 23px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.ship-form-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(212, 175, 55, 0.30);
+    color: #d4af37;
+}
+
+
+/* FORM GRID */
+
+.ship-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.form-field label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+
+    color: rgba(255, 255, 255, 0.55);
+}
+
+
+.form-field input,
+.form-field select {
+    width: 100%;
+    min-height: 43px;
+
+    padding: 0 13px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 9px;
+
+    outline: none;
+
+    background: rgba(0, 0, 0, 0.20);
+    color: rgba(255, 255, 255, 0.90);
+
+    font-family: inherit;
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.form-field input::placeholder {
+    color: rgba(255, 255, 255, 0.28);
+}
+
+
+.form-field input:focus,
+.form-field select:focus {
+    border-color: rgba(212, 175, 55, 0.55);
+
+    background: rgba(0, 0, 0, 0.28);
+
+    box-shadow:
+        0 0 0 3px rgba(212, 175, 55, 0.07);
+}
+
+
+.form-field select {
+    cursor: pointer;
+}
+
+
+.form-field select option {
+    background: #111;
+    color: #fff;
+}
+
+
+/* FORM ACTIONS */
+
+.ship-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+
+.ship-secondary-button,
+.ship-primary-button {
+    min-height: 41px;
+
+    padding: 0 18px;
+
+    border-radius: 9px;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.ship-secondary-button {
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    background: rgba(255, 255, 255, 0.035);
+    color: rgba(255, 255, 255, 0.65);
+}
+
+
+.ship-secondary-button:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: #fff;
+}
+
+
+.ship-primary-button {
+    border: 1px solid rgba(212, 175, 55, 0.50);
+
+    background: rgba(212, 175, 55, 0.12);
+    color: #d4af37;
+}
+
+
+.ship-primary-button:hover {
+    background: rgba(212, 175, 55, 0.20);
+    border-color: rgba(212, 175, 55, 0.75);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.20),
+        0 0 16px rgba(212, 175, 55, 0.07);
+}
+
+
+.ship-primary-button:active,
+.ship-secondary-button:active {
+    transform: translateY(0);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .fleet-controls {
+        flex-wrap: wrap;
+    }
+
+    .ship-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .table-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .fleet-controls {
+        width: 100%;
+    }
+
+    .search-box {
+        flex: 1;
+    }
+
+    .fleet-action-button {
+        flex-shrink: 0;
+    }
+
+    .ship-form-panel {
+        padding: 18px;
+    }
+
+    .ship-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .ship-secondary-button,
+    .ship-primary-button {
+        width: 100%;
+    }
+
+}
+.ship-delete-button {
+    min-height: 41px;
+
+    padding: 0 18px;
+
+    border: 1px solid rgba(220, 70, 70, 0.50);
+
+    border-radius: 9px;
+
+    background: rgba(220, 70, 70, 0.12);
+    color: #e06b6b;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.ship-delete-button:hover {
+    background: rgba(220, 70, 70, 0.20);
+
+    border-color: rgba(220, 70, 70, 0.75);
+
+    color: #ff8585;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.20),
+        0 0 16px rgba(220, 70, 70, 0.07);
+}
+
+
+.ship-delete-button:active {
+    transform: translateY(0);
+}
